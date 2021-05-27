@@ -8,7 +8,7 @@
 
 ## Screenshot
 
-![](images/screenshot.jpg)
+![](images/screenshot.JPG)
 
 ## Getting Started
 
