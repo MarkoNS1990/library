@@ -10,32 +10,28 @@ const book = (author,title,pages,read) =>{
 }
 
 const ui = ()=>{
-   const addBookToUI = (book) =>{
-    const list = document.getElementById('book-list')
-    //Create tr element
-    const row = document.createElement('tr')
-    //Insert cols
-    row.innerHTML = `
-    <td>${book.author}<td>
-    <td>${book.title}<td>
-    <td>${book.pages}<td>
-    <td><a href='#' class='delete'> X <a><td>`
-
-    list.appendChild(row)
-   }
-   const clearFields = () =>{
-    document.getElementById('author').value = ''
-    document.getElementById('title').value = ''
-    document.getElementById('pages').value = ''
-    }
-    const showAlert = (message,className)=>{
+    const addBookToUi =(book) =>{
+        const list = document.getElementById('book-list')
+        //Create tr element
+        const row = document.createElement('tr')
+        //Insert cols
+        row.innerHTML = `
+        <td>${book.title}</td>
+        <td>${book.author}</td>
+        <td>${book.pages}</td>
+        <td><a href="#" class="delete">X<a></td>`;
+    
+        list.appendChild(row)
+        }
+    
+      const showAlert=(message,className)=>{
         //Create a div
         const div = document.createElement('div')
         //Add classes
         div.className = `alert ${className}`
         //Add text
         div.appendChild(document.createTextNode(message))
-        //Get parent
+        //Get paremt
         const container = document.querySelector('.container')
         const form = document.querySelector('#book-form')
         //Insert alert
@@ -45,9 +41,20 @@ const ui = ()=>{
         setTimeout(function(){
             document.querySelector('.alert').remove()
         },3000)
+        }
     
-    }
-  return {addBookToUI,showAlert,clearFields}
+      const deleteBook = (target) =>{
+        if(target.className === 'delete'){
+                target.parentElement.parentElement.remove()
+        }
+        }
+    
+      const  clearFields= () =>{
+        document.getElementById('title').value = ''
+        document.getElementById('author').value = ''
+        document.getElementById('pages').value = ''
+        }
+  return {addBookToUi,showAlert,clearFields,deleteBook}
 }
 
 
@@ -73,7 +80,7 @@ document.getElementById('book-form').addEventListener('submit',function(e){
        myUi.showAlert('Please fill in all fields','error')
     }else{
         //Add book to list
-        myUi.addBookToUI(myBook)
+        myUi.addBookToUi(myBook)
 
         //Show success
         myUi.showAlert('Book Added','success')
@@ -87,4 +94,17 @@ document.getElementById('book-form').addEventListener('submit',function(e){
     
     
     
+})
+
+//Event Listener for Delete
+document.getElementById('book-list').addEventListener('click',function(e){
+
+    const myUi = ui()
+
+    myUi.deleteBook(e.target)
+
+    //Show message
+    myUi.showAlert('Book deleted','success')
+
+    e.preventDefault()
 })
