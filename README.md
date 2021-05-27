@@ -2,6 +2,8 @@
 
 > This is part of the Library Project in [The Odin Project's](https://www.theodinproject.com/courses/javascript/lessons/library) JavaScript Curriculum.
 
+> In this project you can add books to library, delete them or change their read status.
+
 ## Built With
 
 - JavaScript, HTML5 and Skeleton CSS
