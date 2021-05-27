@@ -54,6 +54,7 @@ const ui = ()=>{
         document.getElementById('title').value = ''
         document.getElementById('author').value = ''
         document.getElementById('pages').value = ''
+        document.getElementById('read').checked = false
         }
   return {addBookToUi,showAlert,clearFields,deleteBook}
 }
@@ -67,10 +68,12 @@ document.getElementById('book-form').addEventListener('submit',function(e){
     const title = document.getElementById('title').value,
           author = document.getElementById('author').value,
           pages = document.getElementById('pages').value,
-          read = document.getElementById('read').value  
+          read = document.getElementById('read') 
           
     //Instantiate book
-    const myBook = book(title,author,pages,read)
+    console.log(read);
+    const readValue = read.checked ? 'Yes':'No'
+    const myBook = book(title,author,pages,readValue)
     console.log(myBook)
     //Instantiate UI
     const myUi = ui()
