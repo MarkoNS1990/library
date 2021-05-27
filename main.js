@@ -19,6 +19,7 @@ const ui = ()=>{
         <td>${book.title}</td>
         <td>${book.author}</td>
         <td>${book.pages}</td>
+        <td>${book.read}</td>
         <td><a href="#" class="delete">X<a></td>`;
     
         list.appendChild(row)
@@ -65,11 +66,11 @@ document.getElementById('book-form').addEventListener('submit',function(e){
     //get form values
     const title = document.getElementById('title').value,
           author = document.getElementById('author').value,
-          pages = document.getElementById('pages').value
-        
+          pages = document.getElementById('pages').value,
+          read = document.getElementById('read').value  
           
     //Instantiate book
-    const myBook = book(title,author,pages)
+    const myBook = book(title,author,pages,read)
     console.log(myBook)
     //Instantiate UI
     const myUi = ui()
