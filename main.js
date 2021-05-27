@@ -1,4 +1,14 @@
-const myLibrary = [];
+let myLibrary = [{author:'George Orwell',title:'Insomnia',pages:665,read:'Yes'}];
+
+//Load default library
+window.addEventListener('DOMContentLoaded', () => {
+  const myUi = ui()
+  myLibrary.forEach((book)=>{
+    myUi.addBookToUi(book)
+  })
+  myLibrary = []
+ 
+});
 
 // Create UI using factory pattern for practice
 const ui = () => {
@@ -70,6 +80,7 @@ function Book(author, title, pages, read) {
   this.read = read;
 }
 Book.prototype.displayBooks = () => {
+  console.log(myLibrary);
   myLibrary.forEach((book) => {
     const myUi = ui();
     myUi.addBookToUi(book);
