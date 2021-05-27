@@ -2,11 +2,15 @@ let myLibrary = []
 
 const book = (author,title,pages,read) =>{
     
+    const getBooks = ()=>{
+        return myLibrary
+    }
+
     const addBookToLibrary = () =>{
         myLibrary.push({author,title,pages,read})
     }
 
-    return {addBookToLibrary,author,title,pages,read}
+    return {addBookToLibrary,author,title,pages,read,getBooks}
 }
 
 const ui = ()=>{
@@ -15,11 +19,12 @@ const ui = ()=>{
         //Create tr element
         const row = document.createElement('tr')
         //Insert cols
+        
         row.innerHTML = `
         <td>${book.title}</td>
         <td>${book.author}</td>
         <td>${book.pages}</td>
-        <td>${book.read}</td>
+        <td><a href="#" class="change">${book.read}<a></td>
         <td><a href="#" class="delete">X<a></td>`;
     
         list.appendChild(row)
@@ -49,6 +54,17 @@ const ui = ()=>{
                 target.parentElement.parentElement.remove()
         }
         }
+       const changeRead = (target)=>{
+        
+            if(target.className ==='change'){
+                if (target.text === 'Yes'){
+                    target.text = 'No'
+                }else if(target.text === 'No'){
+                    target.text = 'Yes'
+                }
+
+            }
+       } 
     
       const  clearFields= () =>{
         document.getElementById('title').value = ''
@@ -56,7 +72,7 @@ const ui = ()=>{
         document.getElementById('pages').value = ''
         document.getElementById('read').checked = false
         }
-  return {addBookToUi,showAlert,clearFields,deleteBook}
+  return {addBookToUi,showAlert,clearFields,deleteBook,changeRead}
 }
 
 
@@ -71,10 +87,13 @@ document.getElementById('book-form').addEventListener('submit',function(e){
           read = document.getElementById('read') 
           
     //Instantiate book
-    console.log(read);
+    
     const readValue = read.checked ? 'Yes':'No'
     const myBook = book(title,author,pages,readValue)
-    console.log(myBook)
+    // Add to library
+    myBook.addBookToLibrary()
+    console.log(myLibrary);
+    
     //Instantiate UI
     const myUi = ui()
 
@@ -93,22 +112,27 @@ document.getElementById('book-form').addEventListener('submit',function(e){
         myUi.clearFields()
     }
 
-    
-
-    
-    
-    
 })
 
 //Event Listener for Delete
 document.getElementById('book-list').addEventListener('click',function(e){
 
     const myUi = ui()
-
+    
+    
     myUi.deleteBook(e.target)
 
-    //Show message
-    myUi.showAlert('Book deleted','success')
+    
+
+    e.preventDefault()
+})
+
+//Event Listener for Change
+document.getElementById('book-list').addEventListener('click',function(e){
+
+    const myUi = ui()
+    
+    myUi.changeRead(e.target)
 
     e.preventDefault()
 })
