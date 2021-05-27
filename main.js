@@ -1,19 +1,6 @@
 const myLibrary = [];
 
-const book = (author, title, pages, read) => {
-  const getBooks = () => myLibrary;
-
-  const addBookToLibrary = () => {
-    myLibrary.push({
-      author, title, pages, read,
-    });
-  };
-
-  return {
-    addBookToLibrary, author, title, pages, read, getBooks,
-  };
-};
-
+// Create UI using factory pattern for practice
 const ui = () => {
   const addBookToUi = (book) => {
     const list = document.getElementById('book-list');
@@ -76,6 +63,25 @@ const ui = () => {
   };
 };
 
+function Book(author, title, pages, read) {
+  this.title = title;
+  this.author = author;
+  this.pages = pages;
+  this.read = read;
+}
+Book.prototype.displayBooks = () => {
+  myLibrary.forEach((book) => {
+    const myUi = ui();
+    myUi.addBookToUi(book);
+  });
+};
+
+Book.prototype.addBookToLibrary = (book) => {
+  myLibrary.push({
+    title: book.title, author: book.author, pages: book.pages, read: book.read,
+  });
+};
+
 // Event Listener for Add book
 document.getElementById('book-form').addEventListener('submit', (e) => {
   e.preventDefault();
@@ -88,9 +94,9 @@ document.getElementById('book-form').addEventListener('submit', (e) => {
   // Instantiate book
 
   const readValue = read.checked ? 'Yes' : 'No';
-  const myBook = book(title, author, pages, readValue);
+  const myBook = new Book(title, author, pages, readValue);
   // Add to library
-  myBook.addBookToLibrary();
+  myBook.addBookToLibrary(myBook);
 
   // Instantiate UI
   const myUi = ui();
@@ -101,7 +107,7 @@ document.getElementById('book-form').addEventListener('submit', (e) => {
     myUi.showAlert('Please fill in all fields', 'error');
   } else {
     // Add book to list
-    myUi.addBookToUi(myBook);
+    myBook.displayBooks();
 
     // Show success
     myUi.showAlert('Book Added', 'success');
